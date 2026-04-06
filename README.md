@@ -29,6 +29,20 @@ Using 674,207 respondents from the 2024 FEVS public release, the analysis:
 
 ---
 
+## What this project set out to test
+
+Beyond building a predictive model, the analysis was designed to answer three concrete questions about how engagement works in the federal workforce:
+
+- **Does your day-to-day job design matter more than senior leadership?** We aimed to investigate whether having real skill development opportunities, clear feedback, and meaningful work — the conditions immediately around your job — has a bigger impact on engagement than agency-wide leadership culture. *(H1: job-specific resources > senior leadership)*
+
+- **Does your direct manager matter more than the organization's top executives?** We set out to test whether employees are more influenced by their immediate supervisor — someone they interact with daily — than by senior leaders they rarely encounter. *(H2: supervisor impact > senior leadership impact)*
+
+- **Does which agency you work for actually change your engagement?** A common assumption in federal workforce analytics is that some agencies simply have better cultures, and that agency membership drives much of the engagement gap. We tested how much engagement variance actually sits between agencies vs within individuals — and whether this is large enough to matter for modelling. *(H3: the "levels problem" — is agency-level nesting a real issue?)*
+
+Results for all three are discussed in the [Discussion](#discussion--why-some-results-were-and-were-not-shown) section below.
+
+---
+
 ## Key chart — what drives engagement
 
 ![SHAP domain importance](outputs/figures/14_shap_domain_importance.png)
@@ -43,7 +57,7 @@ Using 674,207 respondents from the 2024 FEVS public release, the analysis:
 
 ## Engagement and intent to leave
 
-![EEI by leaving intention](outputs/figures/05b_eei_by_leaving_intention.png)
+![EEI by leaving intention](outputs/figures/05_eei_by_leaving_intention.png)
 
 *Employees who plan to leave within one year score substantially lower on engagement than those with no plans to leave. This validates EEI as a meaningful people analytics target — it correlates with the outcome HR teams care most about.*
 
