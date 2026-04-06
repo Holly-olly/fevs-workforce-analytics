@@ -67,3 +67,8 @@ yarn-error.log
 .pair
 .cache
 *.log
+
+# Excluded from repo
+research/
+notebooks/phase2_only.ipynb
+claude.md

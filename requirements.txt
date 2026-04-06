@@ -1,0 +1,12 @@
+pandas>=2.0
+numpy>=1.26
+semopy>=2.3
+xgboost>=2.0
+shap>=0.44
+fairlearn>=0.10
+scikit-learn>=1.4
+matplotlib>=3.8
+seaborn>=0.13
+pingouin>=0.5
+python-dotenv>=1.0
+jupyter>=1.0
