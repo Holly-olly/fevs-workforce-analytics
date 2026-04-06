@@ -72,3 +72,4 @@ yarn-error.log
 research/
 notebooks/phase2_only.ipynb
 claude.md
+scripts/
