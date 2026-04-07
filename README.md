@@ -1,18 +1,32 @@
 # What Drives Employee Engagement in the US Federal Workforce?
-### An end-to-end people analytics project — Federal Employee Viewpoint Survey 2024
+
+*An end-to-end people analytics project — Federal Employee Viewpoint Survey 2024*
 
 ---
+
+## About the Survey (FEVS 2024)
+
+The Federal Employee Viewpoint Survey (FEVS) is an annual, government-wide survey administered by the U.S. Office of Personnel Management (OPM). It captures federal employees’ perceptions of their work environment, leadership effectiveness, and organizational culture across 36 agencies. The 2024 public release includes 674,207 respondents and 98 Likert-scale items (1–5 agreement scale), covering eight domains:
+
+- Employee engagement and job resources (autonomy, skill development, feedback)
+- Supervisor and senior leadership effectiveness
+- Organizational culture and cross-unit communication
+- Satisfaction (pay, work, agency)
+- DEIA (Diversity, Equity, Inclusion, and Accessibility)
+- Employee experience (mission alignment, organizational attachment)
+
+OPM publishes three composite indices derived from this data: the Employee Engagement Index (EEI), the Performance Confidence Index (PCI), and the Global Satisfaction Index (GSI). This project uses EEI as the primary outcome and validates its factor structure before any modeling.
 
 ## Three findings any HR leader can act on
 
 > **1. Your employees' immediate manager matters more than senior leadership.**
-> Supervisor behaviours — giving useful feedback, supporting work-life balance — are stronger predictors of engagement than agency-wide leadership culture. Investing in frontline manager quality has a higher return than top-down culture programmes.
+> Supervisor behaviors — giving useful feedback, supporting work-life balance — are stronger predictors of engagement than agency-wide leadership culture. Investing in frontline manager quality has a higher return than top-down culture programs.
 
 > **2. Skill development is the single strongest job-design lever.**
 > *"I am given a real opportunity to improve my skills"* is the #2 engagement predictor globally. Employees who feel their growth is supported are substantially more engaged — a direct argument for L&D investment at every level.
 
 > **3. Breaking down silos beats town halls.**
-> The top predictor of engagement is whether managers actively promote communication *across* work units. Engagement is not just about what happens in your team — it reflects how connected people feel to the broader organisation.
+> The top predictor of engagement is whether managers actively promote communication *across* work units. Engagement is not just about what happens in your team — it reflects how connected people feel to the broader organization.
 
 ---
 
@@ -21,11 +35,12 @@
 Most employee survey analyses compute an index score, rank agencies, and stop there. This project applies the methods a psychometrician would use before trusting any model output: it **verifies the measurement structure first**, then models, then interprets — and it explicitly flags what the data cannot tell us.
 
 Using 674,207 respondents from the 2024 FEVS public release, the analysis:
+
 - Confirmed that OPM's published factor structure for the Employee Engagement Index holds up under formal confirmatory factor analysis (CFI = 0.958)
 - Quantified how much engagement variance sits between agencies vs within individuals — answer: mostly within (ICC = 0.016), which strengthens individual-level conclusions
 - Built a gradient-boosted model explaining 93.9% of individual engagement variance from non-EEI survey items alone
 - Used SHAP to identify which specific survey items drive predictions — and verified those findings hold fairly across demographic subgroups
-- Validated the top predictors against an independent outcome: employees' stated intention to leave (AUC = 0.778), confirming the drivers are not just survey artefacts
+- Validated the top predictors against an independent outcome: employees' stated intention to leave (AUC = 0.778), confirming the drivers are not just survey artifacts
 
 ---
 
@@ -34,10 +49,8 @@ Using 674,207 respondents from the 2024 FEVS public release, the analysis:
 Beyond building a predictive model, the analysis was designed to answer three concrete questions about how engagement works in the federal workforce:
 
 - **Does your day-to-day job design matter more than senior leadership?** We aimed to investigate whether having real skill development opportunities, clear feedback, and meaningful work — the conditions immediately around your job — has a bigger impact on engagement than agency-wide leadership culture. *(H1: job-specific resources > senior leadership)*
-
 - **Does your direct manager matter more than the organization's top executives?** We set out to test whether employees are more influenced by their immediate supervisor — someone they interact with daily — than by senior leaders they rarely encounter. *(H2: supervisor impact > senior leadership impact)*
-
-- **Does which agency you work for actually change your engagement?** A common assumption in federal workforce analytics is that some agencies simply have better cultures, and that agency membership drives much of the engagement gap. We tested how much engagement variance actually sits between agencies vs within individuals — and whether this is large enough to matter for modelling. *(H3: the "levels problem" — is agency-level nesting a real issue?)*
+- **Does which agency you work for actually change your engagement?** A common assumption in federal workforce analytics is that some agencies simply have better cultures, and that agency membership drives much of the engagement gap. We tested how much engagement variance actually sits between agencies vs within individuals — and whether this is large enough to matter for modeling. *(H3: the "levels problem" — is agency-level nesting a real issue?)*
 
 Results for all three are discussed in the [Discussion](#discussion--why-some-results-were-and-were-not-shown) section below.
 
@@ -47,7 +60,7 @@ Results for all three are discussed in the [Discussion](#discussion--why-some-re
 
 ![SHAP domain importance](outputs/figures/14_shap_domain_importance.png)
 
-*Each bar shows the average predictive impact of features in that domain. Supervisor behaviours (Q49, Q55) have the highest per-feature impact. JSR items (job design, autonomy, skill development) are competitive at the individual-item level despite averaging lower across the domain. Senior leadership items have meaningful but lower impact than proximate management.*
+*Each bar shows the average predictive impact of features in that domain. Supervisor behaviors (Q49, Q55) have the highest per-feature impact. JSR items (job design, autonomy, skill development) are competitive at the individual-item level despite averaging lower across the domain. Senior leadership items have meaningful but lower impact than proximate management.*
 
 ![SHAP global top 20](outputs/figures/11_shap_global_importance.png)
 
@@ -94,9 +107,9 @@ Three extensions were added to address common methodological critiques of survey
 - **Cross-sectional data.** All findings are associations, not causal effects. Higher supervisor support predicts higher engagement, but this does not prove that improving supervisor support will raise engagement.
 - **Single year.** The 2024 FEVS captures one snapshot. Trends over time, or changes after policy interventions, require longitudinal analysis.
 - **Shared-method variance.** All predictors and the target come from the same survey, completed in one sitting. This inflates R² — the 93.9% figure reflects survey coherence as well as true predictive power. SHAP rankings are more trustworthy than the absolute R² number. The external outcome model (AUC = 0.778 on turnover intention) provides partial evidence that the identified drivers have real predictive validity beyond method overlap.
-- **Agency identifiers.** Agencies can be identified via the public codebook. Agency-level institutional analysis (comparing specific agencies as organisations) is not the focus of this project.
+- **Agency identifiers.** Agencies can be identified via the public codebook. Agency-level institutional analysis (comparing specific agencies as organizations) is not the focus of this project.
 - **Coarse demographic categories.** Public release demographic codes use 2–4 categories; intersectional analysis (e.g., Black women under 40) is not possible at this resolution.
-- **RMSEA sensitivity at large N.** RMSEA exceeds conventional thresholds in all CFA models — this is a documented artefact when N > 300,000, not evidence of poor model fit. CFI and TLI are the appropriate metrics at this scale and both exceed 0.95.
+- **RMSEA sensitivity at large N.** RMSEA exceeds conventional thresholds in all CFA models — this is a documented artifact when N > 300,000, not evidence of poor model fit. CFI and TLI are the appropriate metrics at this scale and both exceed 0.95.
 
 ---
 
@@ -109,7 +122,7 @@ The 10 JSR features average lower SHAP than the 7 leadership features. This is p
 Proximate supervisor items consistently outrank distant senior leadership items. This is consistent with Thompson & Siciliano (2021): employees view their immediate work environment more vividly and accurately than the agency as a whole. The actionable implication is clear: frontline manager capability is the higher-leverage intervention point.
 
 **H3 (Levels Problem / ICC) — not supported.**
-The expected finding was that meaningful engagement variance sits between agencies (ICC > 0.05). In fact, ICC at the agency level is 0.016 — only 1.6% of variance is between agencies, 98.4% is within. This does not mean agency context is irrelevant, but it does mean individual-level predictive modelling is well-justified. A multilevel model was not added because the ICC does not warrant the additional complexity for predictive purposes at this scale.
+The expected finding was that meaningful engagement variance sits between agencies (ICC > 0.05). In fact, ICC at the agency level is 0.016 — only 1.6% of variance is between agencies, 98.4% is within. This does not mean agency context is irrelevant, but it does mean individual-level predictive modeling is well-justified. A multilevel model was not added because the ICC does not warrant the additional complexity for predictive purposes at this scale.
 
 **Sensitivity analysis (ambiguous referent items) — null result.**
 Removing the 11 Thompson & Siciliano items flagged for referent ambiguity from the CFA did not improve model fit. The structural factor model is robust to their inclusion or exclusion, even if their substantive interpretation at aggregate level is debated.
@@ -121,25 +134,26 @@ EXI items (Q86–Q90, covering inspiration, attachment, mission identity) were i
 
 ## Methods — step by step
 
-| Step | What was done | Methods |
-|---|---|---|
-| **1 — Data audit** | Confirmed respondent-level structure; distinguished NBTJ ("No Basis to Judge") responses from true missing data; assessed missingness mechanisms; examined Likert distributions and internal consistency | Descriptive statistics, MCAR/MAR/MNAR assessment via question-position regression and between-group comparison, Cronbach's α |
-| **2 — CFA** | Confirmed OPM's published factor structure for EEI (3-factor), PCI, and GSI on a random sample of 40,000 respondents; tested discriminant validity | Confirmatory Factor Analysis (semopy), CFI, TLI, RMSEA, SRMR, AVE, HTMT ratios |
-| **3 — Levels Problem** | Quantified between-agency and between-sub-unit engagement variance | One-way random-effects ICC (ANOVA decomposition), 95% CI via F-distribution |
-| **4 — Predictive model** | Modelled EEI from non-EEI survey items; evaluated via 5-fold cross-validation | Gradient Boosted Trees (sklearn HistGradientBoostingRegressor), RMSE, R², MAE |
-| **5 — SHAP** | Identified drivers of engagement predictions; tested H1/H2 | TreeExplainer SHAP values, global importance, beeswarm, dependence plot, domain-level aggregation |
-| **6 — Fairness audit** | Checked model accuracy and residuals across demographic subgroups | fairlearn MetricFrame, MAE by group, mean residual, KDE distribution comparison |
-| **Additional analyses** | HTMT discriminant validity; bifactor CFA; external outcome model (turnover intention) | HTMT ratio computation, semopy bifactor CFA, HistGradientBoostingClassifier, AUC-ROC |
+
+| Step                      | What was done                                                                                                                                                                                            | Methods                                                                                                                       |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **1 — Data audit**       | Confirmed respondent-level structure; distinguished NBTJ ("No Basis to Judge") responses from true missing data; assessed missingness mechanisms; examined Likert distributions and internal consistency | Descriptive statistics, MCAR/MAR/MNAR assessment via question-position regression and between-group comparison, Cronbach's α |
+| **2 — CFA**              | Confirmed OPM's published factor structure for EEI (3-factor), PCI, and GSI on a random sample of 40,000 respondents; tested discriminant validity                                                       | Confirmatory Factor Analysis (semopy), CFI, TLI, RMSEA, SRMR, AVE, HTMT ratios                                                |
+| **3 — Levels Problem**   | Quantified between-agency and between-sub-unit engagement variance                                                                                                                                       | One-way random-effects ICC (ANOVA decomposition), 95% CI via F-distribution                                                   |
+| **4 — Predictive model** | Modelled EEI from non-EEI survey items; evaluated via 5-fold cross-validation                                                                                                                            | Gradient Boosted Trees (sklearn HistGradientBoostingRegressor), RMSE, R², MAE                                                |
+| **5 — SHAP**             | Identified drivers of engagement predictions; tested H1/H2                                                                                                                                               | TreeExplainer SHAP values, global importance, beeswarm, dependence plot, domain-level aggregation                             |
+| **6 — Fairness audit**   | Checked model accuracy and residuals across demographic subgroups                                                                                                                                        | fairlearn MetricFrame, MAE by group, mean residual, KDE distribution comparison                                               |
+| **Additional analyses**   | HTMT discriminant validity; bifactor CFA; external outcome model (turnover intention)                                                                                                                    | HTMT ratio computation, semopy bifactor CFA, HistGradientBoostingClassifier, AUC-ROC                                          |
 
 ---
 
 ## Dataset
 
-**Federal Employee Viewpoint Survey 2024** — public release  
-Source: [OPM FEVS Public Data File](https://www.opm.gov/fevs/public-data-file/)  
+**Federal Employee Viewpoint Survey 2024** — public release
+Source: [OPM FEVS Public Data File](https://www.opm.gov/fevs/public-data-file/)
 674,207 respondents · 98 survey items · 36 agencies · 163 sub-units
 
 ## Author
 
-Olga Maslenkova · [github.com/Holly-olly](https://github.com/Holly-olly)  
+Olga Maslenkova · [github.com/Holly-olly](https://github.com/Holly-olly)
 Psychometrician and people data scientist
