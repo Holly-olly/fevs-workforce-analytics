@@ -155,5 +155,6 @@ Source: [OPM FEVS Public Data File](https://www.opm.gov/fevs/public-data-file/)
 
 ## Author
 
-Olga Maslenkova · [github.com/Holly-olly](https://github.com/Holly-olly)
+Olga Maslenkova · [github.com/Holly-olly](https://github.com/Holly-olly) [LinkedIn](https://www.linkedin.com/in/olga-maslenkova/)
+
 Psychometrician and people data scientist
